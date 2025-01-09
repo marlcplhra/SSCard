@@ -131,7 +131,7 @@ def query_sscard(args):
     # query
     pattern = []
     num = []
-    query_filename = args.data_path + args.dname + "_test_new.csv"
+    query_filename = args.data_path + args.dname + "_test.csv"
     
     df = pd.read_csv(query_filename, na_values=[], keep_default_na=False)
     # df = pd.read_csv(query_filename, dtype={'string': str, 'selectivity': float})
