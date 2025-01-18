@@ -5,6 +5,7 @@
 Run the following command to build SSCard model and test its performance on a dataset:
 
 ```bash
+ cd src
  python run.py --dname=<data_name> --h=<tree_height> --buc=<buc_size> --l=<segment_size> --e=<error_bound> --fitting=<fitting_method>
 ```
 
@@ -14,3 +15,12 @@ Run the following command to build SSCard model and test its performance on a da
 - `<segment_size>`: segment size of the pruned suffix tree
 - `<error_bound>`: the error bound for greedy spline interpolation
 - `<fitting>`: fitting method (`spline` or `linear`)
+
+
+
+For example, run SSCard on DBLP-AN dataset with the same hyperparameter as the paper:
+
+```
+python run.py --dname=DBLP_AN --h=3 --buc=1 --l=5000 --e=32 --fitting=spine
+```
+
