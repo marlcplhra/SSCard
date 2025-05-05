@@ -162,3 +162,24 @@ g++ -std=c++11 -O3 -DNDEBUG -I ~/include -L ~/lib test.cpp -o test -lsdsl -ldivs
 ./test <dataset_name>
 ```
 
+
+
+
+
+### Compare SSCard with gzip
+
+---
+
+We also compare the space consumption between SSCard and standard compression technique `gzip` in python.
+
+Use the following command to run `gzip` in SSCard.
+
+```
+cd gzip/src
+python run.py --dname=<dataset_name> --k=500 --only_query=False
+```
+
+
+
+
+
