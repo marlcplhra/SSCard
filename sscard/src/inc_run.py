@@ -20,7 +20,7 @@ from inc_suffix_tree import SuffixTree
 
 def set_up_logging(filepath):
     logging.basicConfig(
-        filename= filepath + 'output_load2_2.log',  
+        filename= filepath + 'output.log',  
         level=logging.INFO,
         format='%(message)s',
         filemode='w'
