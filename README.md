@@ -129,4 +129,36 @@ python main.py <dataset_name>
 
 ---
 
-We also compare SSCard with the FM-Index. As the state-of-the-art implementation of the FM-Index is based on C++, we we also implement another version fo SSCard in C++.
+We also compare SSCard with the FM-Index. Since the [state-of-the-art implementation](https://github.com/simongog/sdsl-lite) of the FM-Index is written in C++, we additionally implement a C++ version of SSCard for a fair comparison.
+
+Use  the following command to run SSCard in C++:
+```bash
+cd sscard_cpp/src
+# compile
+g++ -O3 -I ../cereal-1.3.2/include main.cpp sscard.cpp suffix_tree.cpp -o main
+# run
+./main <dataset_name> 128 3 5000 10 32
+```
+
+- Note that `<dataset_name>` are `DBLP_AN`, `IMDB_AN`, `IMDB_MT`, `TPCH_PN`, for WIKI dataset, we implement a version based on utf-8 encoding, use the following command to run SSCard (C++) on WIKI:
+
+```
+cd sscard_cpp_wiki/src
+# compile
+g++ -O3 -I ../cereal-1.3.2/include -I ../utfcpp/source main.cpp sscard.cpp suffix_tree.cpp -o main
+# run
+./main WIKI 3736 3 5000 10 32
+```
+
+
+
+For FM-Index, use the following command to run on various datasets:
+
+```bash
+cd sdsl_lite
+# compile
+g++ -std=c++11 -O3 -DNDEBUG -I ~/include -L ~/lib test.cpp -o test -lsdsl -ldivsufsort -ldivsufsort64
+# run
+./test <dataset_name>
+```
+
