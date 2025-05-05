@@ -6,7 +6,7 @@ Run the following command to build SSCard model and test its performance on a da
 
 ```bash
  cd src
- python run.py --dname=<data_name> --h=<tree_height> --buc=<buc_size> --l=<segment_size> --e=<error_bound> --fitting=<fitting_method>
+ python run.py --dname=<data_name> --h=<tree_height> --buc=<buc_size> --l=<segment_size> --e=<error_bound> --fitting=<fitting_method> --load_L=<Load_L>
 ```
 
 - `<data_name>`: name of a dataset (`DBLP_AN`, `IMDB_AN`, `IMDB_MT`, `TPCH_PN`, or `WIKI`)
@@ -15,6 +15,7 @@ Run the following command to build SSCard model and test its performance on a da
 - `<segment_size>`: segment size of the pruned suffix tree
 - `<error_bound>`: the error bound for greedy spline interpolation
 - `<fitting>`: fitting method (`spline` or `linear`)
+- `<load_L>`: default is False, if True, SSCard will load the L-array from file instead of sorting all cyclic shifts. This can be set for testing other components in SSCard, because sorting all cyclic shifts is time consuming. 
 
 
 
@@ -22,6 +23,6 @@ For example, run SSCard on DBLP-AN dataset with the same hyperparameter as the p
 
 ```bash
 cd src
-python run.py --dname=DBLP_AN --h=3 --buc=1 --l=5000 --e=32 --fitting=spine
+python run.py --dname=DBLP_AN --h=3 --buc=1 --l=5000 --e=32 --fitting=spine --load_L=False
 ```
 

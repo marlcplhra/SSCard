@@ -1,0 +1,1 @@
+run.py --dname=WIKI --h=3 --buc=1 --e=32 --l=5000 --fitting=spline --load_L=True --add_info=final

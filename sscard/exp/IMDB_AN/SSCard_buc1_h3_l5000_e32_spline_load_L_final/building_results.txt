@@ -1,0 +1,6 @@
+data len0: 7774344
+Constructing L array time0: 0
+Tree node0: 8534
+Constructing spline time: 0:00:40.787827
+Model size0: 4.290225982666016
+Building time: 0:01:35.733984
