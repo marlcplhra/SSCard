@@ -1,3 +1,12 @@
 [submodule "fm_index/sdsl_lite"]
 	path = fm_index/sdsl_lite
 	url = https://github.com/simongog/sdsl-lite
+[submodule "sscard_cpp/cereal"]
+	path = sscard_cpp/cereal
+	url = https://github.com/USCiLab/cereal
+[submodule "sscard_cpp_wiki/cereal"]
+	path = sscard_cpp_wiki/cereal
+	url = https://github.com/USCiLab/cereal
+[submodule "sscard_cpp_wiki/utfcpp"]
+	path = sscard_cpp_wiki/utfcpp
+	url = https://github.com/nemtrif/utfcpp
