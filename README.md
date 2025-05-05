@@ -78,7 +78,7 @@ As described in the paper, we compared SSCard with the state-of-the-art methods,
 Except for MO, all the code is sourced from their respective GitHub repositories. We implement MO based on the original paper.
 
 Run MO:
-```
+```bash
 cd compares/mo
 python run.py --dname=<dataset_name> --top_k_percent=2 --add_info=final --only_query=True
 ```
@@ -87,7 +87,7 @@ python run.py --dname=<dataset_name> --top_k_percent=2 --add_info=final --only_q
 
 Run LBS:
 
-```
+```bash
 cd compares/dream
 python run.py --model LBS --dname <dataset_name> --p-test 0.1 --seed 0 --Ntbl 5 --PT 20 --max-d 0 --L 10
 ```
@@ -136,7 +136,7 @@ g++ -O3 -I ../cereal-1.3.2/include main.cpp sscard.cpp suffix_tree.cpp -o main
 
 - Note that `<dataset_name>` are `DBLP_AN`, `IMDB_AN`, `IMDB_MT` and `TPCH_PN`, for WIKI dataset, we implement a version based on utf-8 encoding, use the following command to run SSCard (C++) on WIKI:
 
-```
+```bash
 cd sscard_cpp_wiki/src
 # compile
 g++ -O3 -I ../cereal-1.3.2/include -I ../utfcpp/source main.cpp sscard.cpp suffix_tree.cpp -o main
@@ -166,7 +166,7 @@ We also compare the space consumption between SSCard and standard compression te
 
 Use the following command to run `gzip` in SSCard.
 
-```
+```bash
 cd gzip/src
 python run.py --dname=<dataset_name> --k=500 --only_query=False
 ```
@@ -185,14 +185,14 @@ Please follow the instructions of [LPLM](https://github.com/dbis-ukon/lplm?tab=r
 
 After that, build SSCard on all 11 string columns:
 
-```
+```bash
 cd end_to_end/sscard/src
 ./run
 ```
 
 And then run SSCard on the LIKE predicates to get the estimated cardinalities:
 
-```
+```bash
 python cal_sel.py
 ```
 
@@ -206,7 +206,7 @@ chown postgres:postgres sscard_pg_single.txt
 
 Finally, test the end-to-end query time on PostgreSQL:
 
-```
+```bash
 ./run_and_analyse
 python calculate_quantile_mean.py
 ```
