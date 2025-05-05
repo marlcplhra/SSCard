@@ -1,6 +1,6 @@
-## Run SSCard
+**SSCard** is a substring cardinality estimator based on the FM-index, designed for flexible database applications. It first extends the Burrows-Wheeler Transform to support multiple strings, and then organizes the FM-index using a pruned suffix tree. Furthermore, SSCard incorporates a spline interpolation method with an error bound to balance space usage and estimation accuracy.
 
----
+## Run SSCard
 
 Run the following command to build SSCard model and test its performance on a dataset:
 
@@ -42,8 +42,6 @@ python plot_SSCard.py
 
 ## Incremental Update
 
----
-
 Run the following command to do the experiment for incremental update in SSCard:
 
 ```bash
@@ -69,8 +67,6 @@ python inc_run.py --dname=DBLP_AN --cache_space=250000 --inc_h=5  --only_query=F
 
 ## Run other competitors
 
----
-
 As described in the paper, we compared SSCard with the state-of-the-art methods, including:
 
 - MO [PODS1999]: a suffix tree based method.
@@ -79,7 +75,7 @@ As described in the paper, we compared SSCard with the state-of-the-art methods,
 - DREAM [VLD2022]: the SOTA estimator for approximate string queries.
 - LPLM [SIGMOD2024]: the SOTA estimator for LIKE predicates.
 
-Except MO, the code are all from their corresponding Github repositories. We implement MO based on the original paper.
+Except for MO, all the code is sourced from their respective GitHub repositories. We implement MO based on the original paper.
 
 Run MO:
 ```
@@ -127,8 +123,6 @@ python main.py <dataset_name>
 
 ## Compare SSCard with FM-Index
 
----
-
 We also compare SSCard with the FM-Index. Since the [state-of-the-art implementation](https://github.com/simongog/sdsl-lite) of the FM-Index is written in C++, we additionally implement a C++ version of SSCard for a fair comparison.
 
 Use  the following command to run SSCard in C++:
@@ -140,7 +134,7 @@ g++ -O3 -I ../cereal-1.3.2/include main.cpp sscard.cpp suffix_tree.cpp -o main
 ./main <dataset_name> 128 3 5000 10 32
 ```
 
-- Note that `<dataset_name>` are `DBLP_AN`, `IMDB_AN`, `IMDB_MT`, `TPCH_PN`, for WIKI dataset, we implement a version based on utf-8 encoding, use the following command to run SSCard (C++) on WIKI:
+- Note that `<dataset_name>` are `DBLP_AN`, `IMDB_AN`, `IMDB_MT` and `TPCH_PN`, for WIKI dataset, we implement a version based on utf-8 encoding, use the following command to run SSCard (C++) on WIKI:
 
 ```
 cd sscard_cpp_wiki/src
@@ -168,8 +162,6 @@ g++ -std=c++11 -O3 -DNDEBUG -I ~/include -L ~/lib test.cpp -o test -lsdsl -ldivs
 
 ## Compare SSCard with gzip
 
----
-
 We also compare the space consumption between SSCard and standard compression technique `gzip` in python.
 
 Use the following command to run `gzip` in SSCard.
@@ -185,15 +177,13 @@ python run.py --dname=<dataset_name> --k=500 --only_query=False
 
 ## Injecting Estimated Cardinalities into PostgreSQL
 
----
-
-We evaluate the end-to-end query execution time by injecting estimated cardinalities into PostgreSQL 14.5. We take IMDB as dataset and select 79 out of 116 queries of the JOB workload [34] that contains LIKE statement with the form $\%word\%$.
+We evaluate the end-to-end query execution time by injecting estimated cardinalities into PostgreSQL 14.5. We take IMDB as dataset and select 79 out of 116 queries of the JOB workload that contains LIKE statement with the form `%word%`.
 
 Please follow the instructions of [LPLM](https://github.com/dbis-ukon/lplm?tab=readme-ov-file) and [End-to-End-CardEst-Benchmark](https://github.com/Nathaniel-Han/End-to-End-CardEst-Benchmark) to modify the PostgreSQL codebase to accept estimated cardinalities.
 
-(The data for the `cast_info.note` exceeds 100MB, so we have hosted it on [OneDrive](https://drive.google.com/file/d/1XwdtetU69aGPBtmVmeI0UUkHt_YcvSqx/view?usp=drive_link). Please download the file and place it in the `end_to_end/columns/cast_info.note` folder.)
+(The data for the `cast_info.note` exceeds 100MB, so we have hosted it on [OneDrive](https://drive.google.com/file/d/1XwdtetU69aGPBtmVmeI0UUkHt_YcvSqx/view?usp=drive_link). Please download the file and place it in the `end_to_end/columns/cast_info.note` folder)
 
-After that first build SSCard on all the 11 string columns:
+After that, build SSCard on all 11 string columns:
 
 ```
 cd end_to_end/sscard/src
@@ -206,12 +196,12 @@ And then run SSCard on the LIKE predicates to get the estimated cardinalities:
 python cal_sel.py
 ```
 
-This will generate an estimation result file at `end_to_end/cards/like_queries_single/sscard_pg_single.txt`. Please move `sscard_pg_single.txt` into the *data directory* of your PostgreSQL instance (e.g., `/var/lib/pgsql/14.5/data`). This ensures that PostgreSQL can access the SSCard estimation results. the following commands are:
+This will generate an estimation result file at `end_to_end/cards/like_queries_single/sscard_pg_single.txt`. Please move `sscard_pg_single.txt` into the *data directory* of your PostgreSQL instance (e.g., `/var/lib/pgsql/14.5/data`). This ensures that PostgreSQL can access the SSCard estimation results. The following commands are:
 ```bash
 cd ../..
 sudo cp sscard_pg_single.txt /var/lib/pgsql/14.5/data
 sudo -i
-chown postgres:postgres mo_pg_single.txt
+chown postgres:postgres sscard_pg_single.txt
 ```
 
 Finally, test the end-to-end query time on PostgreSQL:
