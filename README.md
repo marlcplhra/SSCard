@@ -191,7 +191,7 @@ We evaluate the end-to-end query execution time by injecting estimated cardinali
 
 Please follow the instructions of [LPLM](https://github.com/dbis-ukon/lplm?tab=readme-ov-file) and [End-to-End-CardEst-Benchmark](https://github.com/Nathaniel-Han/End-to-End-CardEst-Benchmark) to modify the PostgreSQL codebase to accept estimated cardinalities.
 
-(The data for the `cast_info.note` exceeds 100MB, so we have hosted it on OneDrive. Please download the file and place it in the `end_to_end/columns/cast_info.note` folder.)
+(The data for the `cast_info.note` exceeds 100MB, so we have hosted it on [OneDrive](https://drive.google.com/file/d/1XwdtetU69aGPBtmVmeI0UUkHt_YcvSqx/view?usp=drive_link). Please download the file and place it in the `end_to_end/columns/cast_info.note` folder.)
 
 After that first build SSCard on all the 11 string columns:
 
