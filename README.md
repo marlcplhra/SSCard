@@ -31,7 +31,7 @@ python run.py --dname=DBLP_AN --h=3 --buc=1 --l=5000 --e=32 --fitting=spine --lo
 
 Also, you can replot the figures in the paper:
 
-```
+```bash
 cd sscard/src
 python plot_SSCard.py
 ```
@@ -46,7 +46,7 @@ python plot_SSCard.py
 
 Run the following command to do the experiment for incremental update in SSCard:
 
-```
+```bash
 cd sscard/src
 python inc_run.py --dname=<dataset_name> --cache_space=<max_tree_nodes> --inc_h=<h> --only_query=<only_query>
 ```
@@ -58,8 +58,75 @@ python inc_run.py --dname=<dataset_name> --cache_space=<max_tree_nodes> --inc_h=
 
 For example, run incremental update experiment with the same hyperparameter as the paper:
 
-```
+```bash
 cd sscard/src
 python inc_run.py --dname=DBLP_AN --cache_space=250000 --inc_h=5  --only_query=False
 ```
 
+
+
+
+
+### Run other competitors
+
+---
+
+As described in the paper, we compared SSCard with the state-of-the-art methods, including:
+
+- MO [PODS1999]: a suffix tree based method.
+- LBS [EDBT2009]: a $k$-gram based method.
+- Astrid [VLDB2020]: a neural model that learns selectivity-aware embeddings of substrings from the data strings.
+- DREAM [VLD2022]: the SOTA estimator for approximate string queries.
+- LPLM [SIGMOD2024]: the SOTA estimator for LIKE predicates.
+
+Except MO, the code are all from their corresponding Github repositories. We implement MO based on the original paper.
+
+Run MO:
+```
+cd compares/mo
+python run.py --dname=<dataset_name> --top_k_percent=2 --add_info=final --only_query=True
+```
+
+- `<dataset_name>`: name of a dataset (`DBLP_AN`, `IMDB_AN`, `IMDB_MT`, `TPCH_PN`, or `WIKI`). (The same applies below)
+
+Run LBS:
+
+```
+cd compares/dream
+python run.py --model LBS --dname <dataset_name> --p-test 0.1 --seed 0 --Ntbl 5 --PT 20 --max-d 0 --L 10
+```
+
+Run Astrid: 
+
+```bash
+cd compares/astrid
+# prepare the counts.csv and triplets.csv for training
+python prepare_datasets.py
+python AstridEmbed.py <dataset_name>
+```
+
+Run DREAM:
+
+```bash
+cd compares/dream
+run.py --model DREAM --dname <dataset_name> --seed 1234 --l2 0.00000001 --lr 0.001 --layer 1 --pred-layer 3 --cs 512 --max-epoch 100 --patience 10 --max-d 0 --max-char 200 --bs 128 --h-dim 512 --es 100 --clip-gr 10.0
+```
+
+Run LPLM:
+
+```bash
+cd compares/lplm
+# compute the ground truth labels for the training data
+python compute_ground_truth.py
+python main.py <dataset_name>
+```
+
+
+
+
+
+### Compare SSCard with FM-Index
+
+---
+
+We also compare SSCard with the FM-Index. As the state-of-the-art implementation of the FM-Index is based on C++, we we also implement another version fo SSCard in C++.

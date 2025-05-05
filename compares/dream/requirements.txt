@@ -1,0 +1,12 @@
+numpy
+pandas
+PyYAML
+tqdm
+line_profiler
+tensorboardX
+torchsummaryX
+seaborn
+torchcontrib
+scikit-learn
+redis
+openpyxl
