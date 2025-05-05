@@ -155,7 +155,7 @@ g++ -O3 -I ../cereal-1.3.2/include -I ../utfcpp/source main.cpp sscard.cpp suffi
 For FM-Index, use the following command to run on various datasets:
 
 ```bash
-cd sdsl_lite
+cd fm_index
 # compile
 g++ -std=c++11 -O3 -DNDEBUG -I ~/include -L ~/lib test.cpp -o test -lsdsl -ldivsufsort -ldivsufsort64
 # run
@@ -191,6 +191,8 @@ We evaluate the end-to-end query execution time by injecting estimated cardinali
 
 Please follow the instructions of [LPLM](https://github.com/dbis-ukon/lplm?tab=readme-ov-file) and [End-to-End-CardEst-Benchmark](https://github.com/Nathaniel-Han/End-to-End-CardEst-Benchmark) to modify the PostgreSQL codebase to accept estimated cardinalities.
 
+(The data for the `cast_info.note` exceeds 100MB, so we have hosted it on OneDrive. Please download the file and place it in the `end_to_end/columns/cast_info.note` folder.)
+
 After that first build SSCard on all the 11 string columns:
 
 ```
@@ -198,13 +200,13 @@ cd end_to_end/sscard/src
 ./run
 ```
 
-And then run SSCard on the LIKE predicates to get the estimated cardinalities.
+And then run SSCard on the LIKE predicates to get the estimated cardinalities:
 
 ```
 python cal_sel.py
 ```
 
-This will create a estimation result file in `end_to_end/cards/like_queries_single/sscard_pg_single.txt`, and put `sscard_pg_single.txt` into the *data directory* (for example` /var/lib/pgsql/14.5/data`) of your Postgres. In this way, we can make sure Postgres could find the estimation results of SSCard, the following commands are:
+This will generate an estimation result file at `end_to_end/cards/like_queries_single/sscard_pg_single.txt`. Please move `sscard_pg_single.txt` into the *data directory* of your PostgreSQL instance (e.g., `/var/lib/pgsql/14.5/data`). This ensures that PostgreSQL can access the SSCard estimation results. the following commands are:
 ```bash
 cd ../..
 sudo cp sscard_pg_single.txt /var/lib/pgsql/14.5/data
