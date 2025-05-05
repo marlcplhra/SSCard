@@ -1,4 +1,4 @@
-### Run SSCard
+## Run SSCard
 
 ---
 
@@ -40,7 +40,7 @@ python plot_SSCard.py
 
 
 
-### Incremental Update
+## Incremental Update
 
 ---
 
@@ -67,7 +67,7 @@ python inc_run.py --dname=DBLP_AN --cache_space=250000 --inc_h=5  --only_query=F
 
 
 
-### Run other competitors
+## Run other competitors
 
 ---
 
@@ -125,7 +125,7 @@ python main.py <dataset_name>
 
 
 
-### Compare SSCard with FM-Index
+## Compare SSCard with FM-Index
 
 ---
 
@@ -166,7 +166,7 @@ g++ -std=c++11 -O3 -DNDEBUG -I ~/include -L ~/lib test.cpp -o test -lsdsl -ldivs
 
 
 
-### Compare SSCard with gzip
+## Compare SSCard with gzip
 
 ---
 
@@ -182,4 +182,40 @@ python run.py --dname=<dataset_name> --k=500 --only_query=False
 
 
 
+
+## Injecting Estimated Cardinalities into PostgreSQL
+
+---
+
+We evaluate the end-to-end query execution time by injecting estimated cardinalities into PostgreSQL 14.5. We take IMDB as dataset and select 79 out of 116 queries of the JOB workload [34] that contains LIKE statement with the form $\%word\%$.
+
+Please follow the instructions of [LPLM](https://github.com/dbis-ukon/lplm?tab=readme-ov-file) and [End-to-End-CardEst-Benchmark](https://github.com/Nathaniel-Han/End-to-End-CardEst-Benchmark) to modify the PostgreSQL codebase to accept estimated cardinalities.
+
+After that first build SSCard on all the 11 string columns:
+
+```
+cd end_to_end/sscard/src
+./run
+```
+
+And then run SSCard on the LIKE predicates to get the estimated cardinalities.
+
+```
+python cal_sel.py
+```
+
+This will create a estimation result file in `end_to_end/cards/like_queries_single/sscard_pg_single.txt`, and put `sscard_pg_single.txt` into the *data directory* (for example` /var/lib/pgsql/14.5/data`) of your Postgres. In this way, we can make sure Postgres could find the estimation results of SSCard, the following commands are:
+```bash
+cd ../..
+sudo cp sscard_pg_single.txt /var/lib/pgsql/14.5/data
+sudo -i
+chown postgres:postgres mo_pg_single.txt
+```
+
+Finally, test the end-to-end query time on PostgreSQL:
+
+```
+./run_and_analyse
+python calculate_quantile_mean.py
+```
 
