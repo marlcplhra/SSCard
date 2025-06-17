@@ -24,7 +24,7 @@ For example, run SSCard on DBLP-AN dataset with the same hyperparameter as the p
 
 ```bash
 cd sscard/src
-python run.py --dname=DBLP_AN --h=3 --buc=1 --l=5000 --e=32 --fitting=spine --load_L=False
+python run.py --dname=DBLP_AN --h=3 --buc=1 --l=5000 --e=32 --fitting=spline --load_L=False
 ```
 
 
