@@ -30,6 +30,8 @@ def get_model_args():
     args.pushup = (args.pushup in ("True", "true"))
     args.only_query = (args.only_query in ("True", "true"))
     
+    assert args.fitting == 'linear' or args.fitting == 'spline'
+    
     args.data_path = "../../datasets/" + args.dname + "/"
     args.exp_name = "SSCard"
     args.exp_name += "_buc" + str(args.buc)
